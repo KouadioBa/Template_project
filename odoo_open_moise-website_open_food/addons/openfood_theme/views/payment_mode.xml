@@ -1,0 +1,9 @@
+<odoo>
+
+    <template id="custom_payment_order_id" inherit_id="website_sale.payment" name="Cutstom payment mode">
+        <xpath expr="//div[@id='wrap']" position="inside">
+            <input type="hidden" id="order_id" name="order_id" t-att-value="order.id"/>
+        </xpath>
+    </template>
+
+</odoo>

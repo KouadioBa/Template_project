@@ -1,0 +1,177 @@
+<odoo>
+
+    <template id="calendar_tab" name="Calendar tab" inherit_id="open_livreur_theme.joblist">
+        <xpath expr="//div[@id='nav-calendrier']" position="inside">
+            <ul class="ul-cmd nav nav-pills" id="pills-tab" role="tablist">
+                <li class="col nav-item">
+                    <a class="nav-link active" id="pills-time-tab" data-toggle="pill" href="#pills-time" role="tab" aria-controls="pills-time" aria-selected="true">Heures de travail</a>
+                </li>
+                <li class="col nav-item">
+                    <a class="nav-link" id="pills-timeresume-tab" data-toggle="pill" href="#pills-timeresume" role="tab" aria-controls="pills-timeresume" aria-selected="false">Résumé</a>
+                </li>
+            </ul>
+            <div class="tab-content tab-content-body" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-time" role="tabpanel" aria-labelledby="pills-time-tab">
+                    <div class="calendar-content-head">
+                        <p>Aujourd'hui, <t t-esc="datetime.datetime.now().strftime('%A %d %B').title()"/></p>
+                        <div class="progress-bar-content row">
+                            <div class="col">
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">            </div>
+                                </div>
+                            </div>
+                            <div class="choices-nbr">
+                                07/12h
+                            </div>
+                        </div>
+                    </div>
+                    <div class="time-checks-container">
+                        <ul class="ul-days-list nav nav-pills" id="pills-tab" role="tablist">
+                            test : <t t-esc="current_week"/>
+                            <t t-esc="request.env['ir.config_parameter'].get_param('web.base.url')"/>
+                            <t t-esc="request.httprequest"/>
+                            <t t-esc="request.httprequest.full_path"/>
+                            <t t-set="current_partner" t-value="request.env.user.partner_id"/>
+                            <input type="hidden" id="user-id" name="driver" t-att-value="current_partner.id"/>
+                            <t t-foreach="current_week" t-as="week_day">
+                                <li class="col nav-item">
+                                    <a 
+                                        t-if="week_day['date'] == datetime.date.today()" 
+                                        class="nav-link active show"
+                                        t-att-id="'pills-' + week_day['day_str'] + '-tab'"
+                                        data-toggle="pill"
+                                        t-att-href="'#pills-' + week_day['day_str']"
+                                        role="tab"
+                                        t-att-aria-controls="'pills-' + week_day['day_str']"
+                                        aria-selected="true"
+                                    >
+                                        <t t-esc="week_day['day_str'][:3].upper()"/>
+                                    </a>
+                                    <a 
+                                        t-if="not week_day['date'] == datetime.date.today()"
+                                        class="nav-link"
+                                        t-att-id="'pills-' + week_day['day_str'] + '-tab'"
+                                        data-toggle="pill"
+                                        t-att-href="'#pills-' + week_day['day_str']"
+                                        role="tab"
+                                        t-att-aria-controls="'pills-' + week_day['day_str']"
+                                        aria-selected="false"
+                                    >
+                                        <t t-esc="week_day['day_str'][:3].upper()"/>
+                                    </a>
+                                </li>
+                            </t>
+                        </ul>
+                        <div class="tab-content tab-content-body" id="pills-tabContent">
+                            <t t-foreach="current_week" t-as="week_day">
+                                <div
+                                    t-if="week_day['date'] == datetime.date.today()"
+                                    class="tab-pane fade calendar-day active show"
+                                    t-att-id="'pills-' + week_day['day_str']"
+                                    role="tabpanel"
+                                    aria-labelledby="'pills-' + week_day['day_str'] + '-tab'"
+                                >
+                                    <t t-foreach="week_day['checks']" t-as="check">
+                                        <div class="form-check time-form-check">
+                                            <label class="form-check-label col" for="flexCheckDefault">
+                                                <span>
+                                                    <t
+                                                        t-if="len(str(check['time'].start_time).split('.')[0]) == 1"
+                                                        t-esc="'0'"
+                                                    /><t
+                                                        t-esc="str(check['time'].start_time).split('.')[0]"
+                                                    />:<t
+                                                        t-esc="int(str(check['time'].start_time).split('.')[1]) * 6"
+                                                    /><t
+                                                        t-if="len(str(int(str(check['time'].start_time).split('.')[1]) * 6)) == 1"
+                                                        t-esc="'0'"
+                                                    />
+                                                </span>
+                                                <span>
+                                                    <t
+                                                        t-if="len(str(check['time'].end_time).split('.')[0]) == 1"
+                                                        t-esc="'0'"
+                                                    /><t
+                                                        t-esc="str(check['time'].end_time).split('.')[0]"
+                                                    />:<t
+                                                        t-esc="int(str(check['time'].end_time).split('.')[1]) * 6"
+                                                    /><t
+                                                        t-if="len(str(int(str(check['time'].end_time).split('.')[1]) * 6)) == 1"
+                                                        t-esc="'0'"
+                                                    />
+                                                </span>
+                                            </label>
+                                            <div class="col">
+                                                <input t-if="check['checked'] == True" t-att-name="'time' + str(check['time'].id)" class="form-check-input myinput" type="checkbox" t-att-value="str(check['time'].id)" id="flexCheckDefault" checked="true"/>
+                                                <input t-if="check['checked'] == False" t-att-name="'time' + str(check['time'].id)" class="form-check-input myinput" type="checkbox" t-att-value="str(check['time'].id)" id="flexCheckDefault"/>
+                                            </div>
+                                        </div>
+                                    </t>
+                                    <div t-if="week_day['confirmed'] == False" class="submit-checkbox">
+                                        <input type="hidden" id="date" name="date" t-att-value="week_day['date']"/>
+                                        <button type="submit" class="btn">Confirmer</button>
+                                    </div>
+                                </div>
+
+                                <div
+                                    t-if="not week_day['date'] == datetime.date.today()"
+                                    class="tab-pane fade calendar-day"
+                                    t-att-id="'pills-' + week_day['day_str']"
+                                    role="tabpanel"
+                                    aria-labelledby="'pills-' + week_day['day_str'] + '-tab'"
+                                >
+                                    <t t-foreach="week_day['checks']" t-as="check">
+                                        <div class="form-check time-form-check">
+                                            <label class="form-check-label col" for="flexCheckDefault">
+                                                <span>
+                                                    <t
+                                                        t-if="len(str(check['time'].start_time).split('.')[0]) == 1"
+                                                        t-esc="'0'"
+                                                    /><t
+                                                        t-esc="str(check['time'].start_time).split('.')[0]"
+                                                    />:<t
+                                                        t-esc="int(str(check['time'].start_time).split('.')[1]) * 6"
+                                                    /><t
+                                                        t-if="len(str(int(str(check['time'].start_time).split('.')[1]) * 6)) == 1"
+                                                        t-esc="'0'"
+                                                    />
+                                                </span>
+                                                <span>
+                                                    <t
+                                                        t-if="len(str(check['time'].end_time).split('.')[0]) == 1"
+                                                        t-esc="'0'"
+                                                    /><t
+                                                        t-esc="str(check['time'].end_time).split('.')[0]"
+                                                    />:<t
+                                                        t-esc="int(str(check['time'].end_time).split('.')[1]) * 6"
+                                                    /><t
+                                                        t-if="len(str(int(str(check['time'].end_time).split('.')[1]) * 6)) == 1"
+                                                        t-esc="'0'"
+                                                    />
+                                                </span>
+                                            </label>
+                                            <div class="col">
+                                                <input t-if="check['checked'] == True" t-att-name="'time' + str(check['time'].id)" class="form-check-input myinput" type="checkbox" t-att-value="str(check['time'].id)" id="flexCheckDefault" checked="true"/>
+                                                <input t-if="check['checked'] == False" t-att-name="'time' + str(check['time'].id)" class="form-check-input myinput" type="checkbox" t-att-value="str(check['time'].id)" id="flexCheckDefault"/>
+                                            </div>
+                                        </div>
+                                    </t>
+                                    <div t-if="week_day['confirmed'] == False" class="submit-checkbox">
+                                        <input type="hidden" id="date" name="date" t-att-value="week_day['date']"/>
+                                        <button type="submit" class="btn">Confirmer</button>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pills-timeresume" role="tabpanel" aria-labelledby="pills-timeresume-tab">
+                    <div class="calendar-content-head">
+                        <p>Aujourd'hui, <t t-esc="datetime.datetime.now().strftime('%A %d %B').title()"/></p>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

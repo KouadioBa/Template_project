@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_delivery_daily_check,access_delivery.daily_check,model_delivery_daily_check,,1,1,1,1
+access_delivery_available_time,access_delivery.available_time,model_delivery_available_time,,1,1,1,1

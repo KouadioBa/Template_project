@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="picking_order_state" model="ir.ui.view">
+        <field name="name">picking_order.inherit_state.form</field>
+        <field name="model">picking.order</field>
+        <field name="inherit_id" ref="pragmatic_odoo_delivery_boy.picking_order_form_view"/>
+        <field name="arch" type="xml">
+            <field name="state" position="replace">
+                <field name="state"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

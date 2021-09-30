@@ -1,0 +1,288 @@
+#openlivreur .map-div {
+    height: -webkit-fill-available;
+    bottom: 1em;
+    padding-top: 10em;
+}
+
+#openlivreur .customer-map,
+.customer-map>div {
+    height: inherit;
+}
+
+#openlivreur .cmd-content-head {
+    height: 4em;
+    z-index: 2;
+}
+
+
+.cmd-content-head>div>span {
+    font-weight: bold;
+    font-weight: 400;
+    color: black;
+    /* color: #CD2F44; */
+}
+
+#openlivreur .map-inupt {
+    display: none;
+}
+
+#openlivreur .shipping-details-content>div:first-child {
+    padding: 2rem;
+}
+
+#openlivreur .shipping-details-content>div>p {
+    font-weight: bold;
+    color: black;
+}
+
+#openlivreur .client-details>div:first-child i {
+    margin-right: 1rem;
+}
+
+#openlivreur .client-details>div:last-child {
+    display: flex;
+    align-items: center;
+}
+
+#openlivreur .client-details>div:last-child i {
+    font-size: 2rem;
+    font-weight: normal;
+    color: #CD2F44;
+}
+
+#openlivreur .client-details p {
+    margin: 0;
+    margin-bottom: 5px;
+}
+
+#openlivreur .shipping-details-content>div:first-child>div>p>span {
+    font-weight: bold;
+}
+
+#openlivreur .shipping-details-content>div:nth-child(2)>p {
+    padding-left: 2rem;
+    margin-bottom: 0;
+}
+
+#openlivreur .shipping-details-content th {
+    border: none !important;
+}
+
+#openlivreur .shipping-details-content table {
+    color: #5A5959;
+}
+
+#openlivreur .shipping-details-content tbody {
+    background-color: white;
+    font-size: 14px;
+}
+
+#openlivreur .shipping-details-content td:first-child {
+    width: 3rem;
+    text-align: end;
+}
+
+#openlivreur .shipping-details-content td:last-child {
+    padding-right: 2rem;
+    font-weight: bold;
+}
+
+#openlivreur .shipping-details-content>div:nth-child(2)>div {
+    text-align: end;
+    padding-right: 2rem;
+    color: #5A5959;
+    padding-bottom: 0.5rem;
+}
+
+#openlivreur .shipping-details-content>div:nth-child(2)>div>p:first-child {
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+#openlivreur .shipping-details-content>div:nth-child(2)>div>p:last-child {
+    font-size: 18px;
+    font-weight: bolder;
+}
+
+#openlivreur .assignation {
+    text-align: center;
+}
+
+#openlivreur .assignation button {
+    margin: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+#openlivreur .pick-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+}
+
+#openlivreur .step-elt {
+    width: 1.5em;
+}
+
+#openlivreur .step i {
+    color: #CD2F44;
+    font-weight: 500;
+}
+
+#openlivreur .line {
+    height: 5em;
+    border-left: 3px solid #C2C1C2;
+}
+
+#openlivreur .active-circle {
+    font-weight: bold !important;
+    font-size: x-large;
+}
+
+#openlivreur .active-line {
+    border-left: 3px solid #CD2F44 !important;
+}
+
+#openlivreur .delivery-message {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+#openlivreur .delivery-message>div:first-child {
+    background-color: #CD2F44;
+    border-radius: 50%;
+    width: 2.2rem;
+    height: 2.2rem;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#openlivreur .delivery-message>div:first-child i {
+    color: #f1f1f1;
+    transform: rotateY(180deg);
+}
+
+#openlivreur .delivery-message>div:nth-child(2) {
+    margin-left: 1em;
+    display: flex;
+    align-items: center;
+}
+
+#openlivreur .delivery-message>div:nth-child(2)>i {
+    color: #CD2F44;
+    font-size: 2rem;
+    margin-right: -1px;
+}
+
+#openlivreur .delivery-message>div:nth-child(2)>div {
+    background-color: #CD2F44;
+    display: -webkit-flex;
+    border-radius: 5px;
+    align-content: center;
+    padding: 0;
+}
+
+#openlivreur .delivery-message>div:nth-child(2)>div i {
+    font-size: 5px;
+    color: #d8d8d8;
+    margin: 2px;
+}
+
+#openlivreur .delivery-message>div:nth-child(2)>div span {
+    font-size: 12px;
+    color: white;
+    margin: 10px;
+}
+
+#openlivreur .delivery-message button {
+    margin: inherit;
+}
+
+#openlivreur .delivery-done {
+    text-align: center;
+    padding: 2rem;
+}
+
+#openlivreur .delivery-done>div:first-child p {
+    font-size: large;
+    margin: auto;
+}
+
+#openlivreur .delivery-done>div:first-child img {
+    width: 7rem;
+    margin: 1rem;
+}
+
+#openlivreur .delivery-done>div:nth-child(2)>p:first-child {
+    font-weight: bold;
+    font-size: large;
+    margin: 1rem;
+}
+
+#openlivreur .delivery-done>div:nth-child(2)>img {
+    border: 1px groove #ffffff;
+    border-radius: 50%;
+    width: 4rem;
+}
+
+#openlivreur .delivery-done>div:nth-child(2)>p:nth-child(3) {
+    font-weight: 600;
+    font-size: large;
+    margin: 0.6rem;
+}
+
+#openlivreur .delivery-done>div:nth-child(3)>p:first-child {
+    font-weight: 900;
+    font-size: larger;
+    margin: 10px;
+}
+
+#openlivreur .delivery-done a {
+    background-color: #CD2F44;
+    border-color: #adadad;
+}
+
+#openlivreur .star-empty {
+    font-weight: normal;
+}
+
+#openlivreur .star-full {
+    font-weight: bold;
+}
+
+#openlivreur .cmd-content-head>div {
+    position: fixed;
+    display: grid;
+    justify-items: start;
+    background-color: #f7f8fa;
+    color: #CD2F44;
+    border-bottom: inset;
+}
+
+#openlivreur .none-on-xs-details {
+    display: none !important;
+}
+
+/* @include media-breakpoint-up(sm) {
+} */
+@include media-breakpoint-up(md) {
+    #openlivreur .cmd-content-head {
+        height: 6.3em;
+    }
+
+    #openlivreur .cmd-content-head>div>span {
+        font-size: 1.5em;
+    }
+
+    #openlivreur .none-on-xs-details {
+        display: block !important;
+    }
+}
+
+/* @include media-breakpoint-up(lg) {
+} */
+/* @include media-breakpoint-up(xl) {
+} */

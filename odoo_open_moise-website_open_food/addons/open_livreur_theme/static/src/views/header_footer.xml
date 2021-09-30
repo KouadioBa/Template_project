@@ -1,0 +1,129 @@
+<odoo>
+
+    <template id="custom_header" inherit_id="portal.frontend_layout" name="Custom Header">
+        <!-- <xpath expr="//nav[hasclass('navbar')]" position="attributes">
+            <attribute name="class" add="header-nav" separator=" "/>
+        </xpath>
+        <xpath expr="//a[hasclass('navbar-brand')]" position="before">
+            <div t-if="user_id.has_group('pragmatic_delivery_control_app.group_delivery_control_app_user')" class="col nav-div div-notif">
+                <a class="nav-link" href="#"><i class="fas fa-bell"/></a>
+                <a class="nav-link" href="#"><i class="fas fa-question-circle"/></a>
+            </div>
+        </xpath> -->
+
+        <!-- <xpath expr="//header" position="replace"> -->
+
+        <!-- <div class="col-5 col-md nav-div div-logo">
+                <apan href="/" t-if="user_id.has_group('pragmatic_delivery_control_app.group_delivery_control_app_user')" class="comp-name">
+                    Open Livreur
+                </apan>
+                <a href="/" t-if="not user_id.has_group('pragmatic_delivery_control_app.group_delivery_control_app_user')" class="navbar-brand logo">
+                    <img t-att-src="'/logo.png?company=%s' % res_company.id" t-att-alt="'Logo of %s' % res_company.name" t-att-title="res_company.name"/>
+                </a>
+            </div> -->
+
+        <!-- </xpath> -->
+
+        <!-- <xpath expr="//button[hasclass('navbar-toggler')]" position="replace">
+            <div class="col nav-div div-hamburg">
+                <button type="button" class="navbar-toggler hamb-button" data-toggle="collapse" data-target="#top_menu_collapse">
+                    <span class="navbar-toggler-icon hamb-nav"/>
+                </button>
+            </div>
+        </xpath> -->
+    </template>
+
+    <template id="custom_footer" inherit_id="website.layout" name="Cutstom Footer">
+        <!-- <xpath expr="//div[@id='footer']" position="replace">
+            <section class="footer-section">
+            </section>
+        </xpath> -->
+    </template>
+
+    <template id="custom_copyright" inherit_id="website.layout" name="Cutstom Footer">
+        <!-- <xpath expr="//div[@class='o_footer_copyright']" position="replace">
+        
+        </xpath> -->
+    </template>
+
+    <!-- <template id="openliv_layout" name="Order Details">
+        <t t-call="website.layout">
+            <div class="openlivreur">
+                <header>
+                    <nav class="navbar navbar-expand-md navbar-light bg-light">
+                        <div class="container">
+                            <div class="col nav-div div-hamburg">
+                                <button type="button" class="navbar-toggler hamb-button" data-toggle="collapse" data-target="#top_menu_collapse">
+                                    <span class="navbar-toggler-icon hamb-nav"/>
+                                </button>
+                            </div>
+                            <div class="col-5 col-md nav-div div-logo">
+                                <a href="/" class="navbar-brand logo">
+                                    <img t-att-src="'/logo.png?company=%s' % res_company.id" t-att-alt="'Logo of %s' % res_company.name" t-att-title="res_company.name"/>
+                                </a>
+                            </div>
+                            <div t-if="user_id.has_group('pragmatic_delivery_control_app.group_delivery_control_app_user')" class="col nav-div div-notif">
+                                <a class="nav-link" href="#"><i class="fas fa-bell"/></a>
+                                <a class="nav-link" href="#"><i class="fas fa-question-circle"/></a>
+                            </div>
+                            <div class="collapse navbar-collapse" id="top_menu_collapse">
+                                <ul class="nav navbar-nav ml-auto text-right" id="top_menu">
+                                    <li class="nav-item divider" t-ignore="true" t-if="not user_id._is_public()"/>
+                                    <li class="nav-item dropdown" t-ignore="true" t-if="not user_id._is_public()">
+                                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                                            <b>
+                                                <span t-esc="user_id.name[:23] + '...' if user_id.name and len(user_id.name) &gt; 25 else user_id.name"/>
+                                            </b>
+                                        </a>
+                                        <div class="dropdown-menu js_usermenu" role="menu">
+                                            <a id="o_logout" class="dropdown-item" t-attf-href="/web/session/logout?redirect=/" role="menuitem">Logout</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="nav nav-tabs driver-menu" id="nav-tab" role="tablist">
+                                <a class="col nav-item nav-link active" id="nav-commandes-tab" data-toggle="tab" href="#nav-commandes" role="tab" aria-controls="nav-commandes" aria-selected="true"><span><i class="fas fa-box-full"></i></span><span>Commandes</span></a>
+                                <a class="col nav-item nav-link" id="nav-rapports-tab" data-toggle="tab" href="#nav-rapports" role="tab" aria-controls="nav-rapports" aria-selected="false"><span><i class="fas fa-file-chart-line"></i></span><span>Rapports</span></a>
+                                <a class="col nav-item nav-link" id="nav-calendrier-tab" data-toggle="tab" href="#nav-calendrier" role="tab" aria-controls="nav-calendrier" aria-selected="false"><span><i style="font-weight: 500" class="fas fa-calendar-alt"></i></span><span>Calendrier</span></a>
+                                <a class="col nav-item nav-link" id="nav-defis-tab" data-toggle="tab" href="#nav-defis" role="tab" aria-controls="nav-defis" aria-selected="false"><span><i class="fas fa-bullseye-arrow"></i></span><span>Défis</span></a>
+                                <a class="col nav-item nav-link" id="nav-compte-tab" data-toggle="tab" href="#nav-compte" role="tab" aria-controls="nav-compte" aria-selected="false"><span><i class="fas fa-user-circle"></i></span><span>Compte</span></a>
+                            </div>
+                        </div>
+                    </nav>
+                </header>
+
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-commandes" role="tabpanel" aria-labelledby="nav-commandes-tab">
+                        <ul class="ul-cmd nav nav-pills" id="pills-tab" role="tablist">
+                            <li class="col nav-item">
+                                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Historiques de commandes</a>
+                            </li>
+                            <li class="col nav-item">
+                                <a class="nav-link" id="pills-workzone-tab" data-toggle="pill" href="#pills-workzone" role="tab" aria-controls="pills-workzone" aria-selected="false">Zone de travail</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content tab-content-body" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                            </div>
+                            <div class="tab-pane fade" id="pills-workzone" role="tabpanel" aria-labelledby="pills-workzone-tab">...</div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-rapports" role="tabpanel" aria-labelledby="nav-rapports-tab">B</div>
+                    <div class="tab-pane fade" id="nav-calendrier" role="tabpanel" aria-labelledby="nav-calendrier-tab"></div>
+                    <div class="tab-pane fade" id="nav-defis" role="tabpanel" aria-labelledby="nav-defis-tab">D</div>
+                    <div class="tab-pane fade" id="nav-compte" role="tabpanel" aria-labelledby="nav-compte-tab">E</div>
+                </div>
+                <div class="driver-footer">
+                    <div class="">
+                        Mes revenus journaliers : 
+                    </div>
+                    <div class="">
+                        Ma caisse : 
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template> -->
+
+</odoo>

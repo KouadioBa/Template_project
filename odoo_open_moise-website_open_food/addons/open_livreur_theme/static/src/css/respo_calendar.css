@@ -1,0 +1,122 @@
+@include media-breakpoint-up(xs) {
+    .calendar-content-head {
+        padding: 1.8rem;
+        padding-top: 1rem;
+        padding-bottom: 0;
+        color: #911224;
+    }
+    .calendar-content-head > p {
+        font-size: medium;
+        font-weight: bold;
+        margin: 0;
+    }
+    .calendar-content-head > div{
+        padding: 0.8rem;
+    }
+    .progress-bar-content > div:first-child {
+        padding: 0;
+        padding-right: 10px;
+        height: 1rem;
+        margin: auto;
+    }
+    .progress {
+        border-radius: 0;
+        height: 100%;
+        background-color: #D6D4D4;
+    }
+    .progress-bar {
+        background-color: #911224;
+    }
+    .choices-nbr {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        justify-content: flex-end;
+    }
+    ul#pills-tab {
+        background-color: #D6D4D4;
+    }
+    .ul-days-list > li {
+        padding: 0;
+    }
+    .ul-days-list > li a {
+        padding: 0;
+        text-align: center;
+        font-size: 12px;
+        font-weight: bold;
+        padding: 8px;
+        color: #911224;
+        border-radius: unset !important;
+        line-height: normal;
+    }
+    .ul-days-list > li a.active {
+        background-color: #911224 !important;
+    }
+    .time-checks-container > div {
+        padding: 1rem;
+        padding-left: 1.8rem;
+        padding-right: 1.8rem;
+    }
+    .time-form-check{
+        font-size: 12px;
+        font-weight: bold;
+        display: flex;
+        padding: 0;
+        padding-bottom: 8px;
+    }
+    .time-form-check label {
+        text-align: start;
+        padding: 0;
+    }
+    .time-form-check div {
+        display: flex;
+        justify-content: flex-end;
+        padding: 0;
+    }
+    .time-form-check span {
+        margin-right: 1rem;
+    }
+    .time-form-check input {
+        width: 0;
+    }
+    
+    .myinput[type="checkbox"]:after {
+        position: relative;
+        display: block;
+        right: 11px;
+        top: 4px;
+        width: 11px;
+        height: 11px;
+        border: 2px solid black;
+        border-radius: 25%;
+        content: "";
+        background-position: center;
+    }
+    .myinput[type="checkbox"]:checked:after {
+        background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='5' stroke-linecap='round' stroke-linejoin='round' class='feather feather-check'><polyline points='20 6 9 17 4 12'></polyline></svg>");
+        background-size: cover;
+        background-color: black;
+    }
+
+    .submit-checkbox {
+        display: flex;
+        justify-content: center;
+    }
+    .submit-checkbox button {
+        background-color: #482c30;
+        color: white;
+        font-size: smaller;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+    
+}
+/* @include media-breakpoint-up(sm) {
+} */
+@include media-breakpoint-up(md) {
+
+}
+/* @include media-breakpoint-up(lg) {
+} */
+/* @include media-breakpoint-up(xl) {
+} */

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <menuitem id="delivery_menu"
+        parent="website.menu_website_global_configuration"
+        name="Livraisons"
+        sequence="100"
+    />
+
+    <!-- <record id="timetable_calendar_view" model="ir.ui.view">
+        <field name="name">delivery.daily_check.calendar</field>
+        <field name="model">delivery.daily_check</field>
+        <field name="type">calendar</field>
+        <field name="arch" type="xml">
+            <calendar string="Heures sélectionnées"
+                        mode="day"
+                        form_view_id="form"
+                        color="delivery_man"
+                        event_open_popup="True"
+                        date_delay="hours_number">
+                <field name="delivery_man"/>
+                <field name="hours_number"/>
+            </calendar>
+        </field>
+    </record> -->
+
+    <record id="action_timetable" model="ir.actions.act_window">
+        <field name="name">Heures de livraisons</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">delivery.daily_check</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="delivery_timetable_menu"
+        parent="delivery_menu"
+        name="Planing des livreurs"
+        action="action_timetable"
+        sequence="1"
+    />
+
+    <!-- heures de livraison -->
+    <record id="delivery_available_time_tree" model="ir.ui.view">
+        <field name="name">delivery_available_time : list</field>
+        <field name="model">delivery.available_time</field>
+        <field name="arch" type="xml">
+            <tree string="Horaires de service">
+                <field name="hour_rank"/>
+                <field name="start_time" widget="float_time"/>
+                <field name="end_time" widget="float_time"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="delivery_available_time_form" model="ir.ui.view">
+        <field name="name">delivery_available_time : form</field>
+        <field name="model">delivery.available_time</field>
+        <field name="arch" type="xml">
+            <form string="Horaire de service">
+                <sheet>
+                    <group>
+                        <field name="hour_rank"/>
+                    </group>
+                    <div class="o_setting_right_pane">
+                        <field name="start_time" widget="float_time"/>
+                        <span>  -  </span>
+                        <field name="end_time" widget="float_time"/>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_delivery_available_time" model="ir.actions.act_window">
+        <field name="name">Heures de service</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">delivery.available_time</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="delivery_available_time"
+        parent="delivery_menu"
+        name="Heures disponibles"
+        action="action_delivery_available_time"
+        sequence="3"
+    />
+    
+</odoo>

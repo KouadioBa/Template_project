@@ -1,0 +1,754 @@
+<odoo>
+    <template id="custom_menu" inherit_id="website.assets_frontend">
+        <xpath expr="//link[last()]" position="after">
+            <link rel="stylesheet" type="text/scss" href="/open_livreur_theme/static/src/css/respo_styles.css"/>
+            <link rel="stylesheet" type="text/scss" href="/open_livreur_theme/static/src/css/respo_shipping_details.css"/>
+            <link rel="stylesheet" type="text/scss" href="/open_livreur_theme/static/src/css/respo_calendar.css"/>
+            <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+            <script src="https://unpkg.com/feather-icons"></script>
+            <script type="text/javascript" src="/open_livreur_theme/static/src/js/scripts.js"/>
+        </xpath>
+    </template>
+
+    <template id="joblist" name="Driver Job List">
+        <t t-call="website.layout">
+            <!-- <input type="hidden" id="current-screen" name="current_screen" value="shipping-list"/> -->
+            <div id="openlivreur" class="row m-0 p-0 d-block d-md-flex col-md">
+                <div class="bg-white sticky-top col-12 col-md-2" id="olivreur-header">
+                    <nav class="menu p-0 d-flex justify-content-center col-md-2 navbar navbar-expand-md">
+                        <div class="w-100 row">
+                            <div class="d-flex d-md-block  pt-md-4 p-2 pb-0 col-12 col-md nav-div div-logo">
+                                <a href="/" class="m-md-auto d-block col col-md-6 navbar-brand logo-link">
+                                    <img class="img-fluid" src="/open_livreur_theme/static/src/img/touchpoint-mobile-livreur.png"/>
+                                </a>
+                                <p class="ol-color m-auto comp-name">Open Livreur</p>
+                                <button type="button" class="ol-color navbar-toggler" data-toggle="collapse" data-target="#menuNanbarToggleExternalContent" aria-controls="menuNanbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="fa fa-bars"></span>
+                                </button>
+                            </div>
+                            <div class="nav px-md-0 driver-menu collapse navbar-collapse" id="menuNanbarToggleExternalContent">
+                                <a class="col-12 d-flex justify-content-start align-items-center nav-item nav-link active" id="nav-commandes-tab" data-toggle="tab" href="#nav-commandes" role="tab" aria-controls="nav-commandes" aria-selected="true">
+                                    <span class="col-4 my-2">
+                                        <i class="fas fa-box-full"></i>
+                                    </span>
+                                    <span>Commandes</span>
+                                </a>
+                                <a class="col-12 d-flex justify-content-start align-items-center nav-item nav-link " id="nav-rapports-tab" data-toggle="tab" href="#nav-rapports" role="tab" aria-controls="nav-rapports" aria-selected="false">
+                                    <span class="col-4 my-2">
+                                        <i class="fas fa-file-chart-line"></i>
+                                    </span>
+                                    <span>Rapports</span>
+                                </a>
+                                <a class="col-12 d-flex justify-content-start align-items-center nav-item nav-link " id="nav-calendrier-tab" data-toggle="tab" href="#nav-calendrier" role="tab" aria-controls="nav-calendrier" aria-selected="false">
+                                    <span class="col-4 my-2">
+                                        <i style="font-weight: 500" class="fas fa-calendar-alt"></i>
+                                    </span>
+                                    <span>Calendrier</span>
+                                </a>
+                                <a class="col-12 d-flex justify-content-start align-items-center nav-item nav-link " id="nav-defis-tab" data-toggle="tab" href="#nav-defis" role="tab" aria-controls="nav-defis" aria-selected="false">
+                                    <span class="col-4 my-2">
+                                        <i class="fas fa-bullseye-arrow"></i>
+                                    </span>
+                                    <span>Défis</span>
+                                </a>
+                                <a class="col-12 d-flex justify-content-start align-items-center nav-item nav-link " id="nav-compte-tab" data-toggle="tab" href="#nav-compte" role="tab" aria-controls="nav-compte" aria-selected="false">
+                                    <span class="col-4 my-2">
+                                        <i class="fas fa-user-circle"></i>
+                                    </span>
+                                    <span>Compte</span>
+                                </a>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+
+                <div class="mb-md-0 col-12 col-md-7 tab-content" id="nav-tabContent">
+                    <div class="col-md-7 d-none shipdet-elt position-fixed map-div">
+                        <div class="customer-map">
+                            <script t-att-src="maps_script_url"/>
+                            <div class="" id="customer_map"/>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show active" id="nav-commandes" role="tabpanel" aria-labelledby="nav-commandes-tab">
+                        <div class="dashbd-elt pt-4 col">
+                            <p class="mb-2 ol-color">Bienvenu !</p>
+                            <t t-set="nm_list" t-value="(user_id.name).split(' ')"/>
+                            <t t-set="driver_firstname" t-value="nm_list[len(nm_list)-1]"/>
+                            <h4 class="p-0 m-0">
+                                <span t-esc="driver_firstname"/>
+                            </h4>
+                        </div>
+
+                        <div class="dashbd-mdblc dashbd-elt py-2 sticky-top col">
+                            <h4 class="p-0 mt-2 d-block col">Tableau de bord</h4>
+                            <p class="mb-2 font-weight-bold ol-color">Récapitulatif</p>
+                            <div class="recap d-md-flex justify-content-start align-items-start nav nav-pills" role="tablist">
+                                <a id="pills-accepted-tab" data-toggle="pill" href="#pills-accepted" role="tab" aria-controls="pills-accepted" aria-selected="false" class="col-4 col-md-3 nav-item bg-white mr-2 mr-md-3 d-flex align-items-center p-2 p-md-3">
+                                    <div class="recap-text">
+                                        <p class="m-0">Commandes acceptées</p>
+                                        <p class="m-0 ol-color" id="compute-accept">
+                                            <t t-esc="len(accepted_pickings) + len(collected_pickings)"/>
+                                        </p>
+                                    </div>
+                                    <div class="recap-icon">
+                                        <i class="ol-color fas fa-truck-loading"></i>
+                                    </div>
+                                </a>
+                                <a id="pills-delivered-tab" data-toggle="pill" href="#pills-delivered" role="tab" aria-controls="pills-delivered" aria-selected="false" class="col-4 col-md-3 nav-item bg-white mr-2 mr-md-3 d-flex align-items-center p-2 p-md-3">
+                                    <div class="recap-text">
+                                        <p class="m-0">Commandes livrées</p>
+                                        <p class="m-0 ol-color" id="compute-deliv">
+                                            <t t-esc="len(delivered_pickings)"/>
+                                        </p>
+                                    </div>
+                                    <div class="recap-icon">
+                                        <i class="ol-color fas fa-box-check"></i>
+                                    </div>
+                                </a>
+                                <a id="pills-workzone-tab" data-toggle="pill" href="#pills-workzone" role="tab" aria-controls="pills-workzone" aria-selected="false" class="col-3 nav-item bg-white d-flex align-items-center p-2 p-md-3 justify-content-between">
+                                    <div class="recap-text">
+                                        <p class="d-none d-md-block m-0">Indicateur de performance</p>
+                                        <p class="m-0 ol-color" id="compute-perform">7</p>
+                                    </div>
+                                    <div class="recap-icon">
+                                        <i class="ol-color fas fa-star-half-alt"></i>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <ul class="d-none d-md-none ul-cmd nav nav-pills" id="pills-tab" role="tablist">
+                            <li class="col nav-item">
+                                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Historiques de commandes</a>
+                            </li>
+                            <li class="col nav-item">
+                                <a class="nav-link" id="pills-workzone-tab" data-toggle="pill" href="#pills-workzone" role="tab" aria-controls="pills-workzone" aria-selected="false">Zone de travail</a>
+                            </li>
+                        </ul>
+
+                        <div class="d-none position-relative shipdet-elt cmd-content-head p-0 col-12 col-md">
+                            <div class="col-12 col-md-7 p-3">
+                                <button class="p-0 back btn btn-link" type="button">
+                                    <i class="fas fa-arrow-left"></i> Retour</button>
+                                <span class="">Commande n° <span id="current-order-name"></span>
+                                </span>
+                            </div>
+                            <input type="hidden" id="latitude" name="latitude" value="" placeholder="Partner Latitude"/>
+                            <input type="hidden" id="longitude" name="longitude" value="" placeholder="Partner Longitude"/>
+                            <input type="hidden" id="driver_latitude" name="driver_latitude" value="" placeholder="Driver Latitude"/>
+                            <input type="hidden" id="driver_longitude" name="driver_longitude" value="" placeholder="Driver Longitude"/>
+                            <input type="hidden" id="driver_id" name="driver_id" t-att-value="user_id.partner_id.id"/>
+                        </div>
+
+                        <div class="tab-content tab-content-body" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                <div id="assignment-prompt" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="label" aria-hidden="true">
+                                    <div class="align-items-center justify-content-center modal-dialog">
+                                        <div class="col-md-8 modal-content">
+                                            <div id="loading-indicator" style="display:none" />
+                                            <div class="assignment-confirmation">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Commande n° <span id="order-name"></span>
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&#215;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="text-left modal-body">
+                                                    <div>
+                                                        Veuillez confirmer
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <input class="d-none confirmation" type="radio" name="confirmation" id="accept" value="accept"/>
+                                                    <input class="d-none confirmation" type="radio" name="confirmation" id="reject" value="reject"/>
+                                                    <button type="button" class="btn cancel-action" data-dismiss="modal">Fermer
+                                                    </button>
+                                                    <button type="button" class="btn confirm-action">Ok</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col mt-3 font-weight-bold dashbd-mdflx justify-content-between mb-2 d-none d-md-flex ol-color">
+                                    <span class="font-weight-bold">Commandes Disponibles</span>
+                                    <span>Tout voir <i class="fas fa-chevron-right"/>
+                                    </span>
+                                </div>
+
+                                <div class="order-list">
+                                    <div t-if="len(assigned_pickings) == 0 and len(accepted_pickings) == 0 and len(collected_pickings) == 0" class="div-no-cmd pt-3 d-flex flex-column align-items-center">
+                                        <div class="col-md-6">
+                                            <img class="no-cmd-img" src="/open_livreur_theme/static/src/img/002-commander-de-la-nourriture.png"/>
+                                        </div>
+                                        <div>
+                                            <p>Pas de nouvelle commande</p>
+                                            <p class="col-md-5">Patientez quelques minutes. Les gens ont toujours besoin de quelque chose</p>
+                                            <p class="pt-5">A la prochaine fois !</p>
+                                        </div>
+                                    </div>
+
+                                    <div t-if="picking_orders and len(picking_orders) &gt; 0" class="col flex-wrap d-md-flex d-block cmd-list">
+                                        <t t-foreach="picking_orders" t-as="sale_order_picking">
+                                            <t t-foreach="sale_order_picking.sale_order" t-as="order">
+                                                <div t-if="sale_order_picking.state == 'assigned' or sale_order_picking.state == 'accepted' or sale_order_picking.state == 'collected'" class="mb-3 bg-white p-3 mr-md-2 pb-md-0 div-each-cmd dashbd-elt">
+                                                    <div class="dashbd-elt">
+                                                        <div class="d-flex justify-content-between">
+                                                            <input type="hidden" id="part-lat" name="part_lat" t-att-value="order.partner_shipping_id.partner_latitude"/>
+                                                            <input type="hidden" id="part-long" name="part_long" t-att-value="order.partner_shipping_id.partner_longitude"/>
+                                                            <input type="hidden" id="order-name" name="order_name" t-att-value="order.name"/>
+                                                            <span class="client-name">
+                                                                <t t-esc="order.partner_id.name"/>
+                                                            </span>
+                                                            <button type="button" class="p-0 order-details btn btn-link">Détails</button>
+                                                        </div>
+                                                        <div class="py-2">
+                                                            <i class="fas fa-map-marker-alt"></i>
+                                                            <span class="client-adress">
+                                                                <t t-esc="order.partner_shipping_id.street"/>
+                                                            </span>
+                                                        </div>
+                                                        <div class="d-flex justify-content-between div-datetime">
+                                                            <div class="">
+                                                                <span>Date</span>
+                                                                <p>
+                                                                    <t t-esc="order.confirmation_date.strftime('%d-%m-%Y')"/>
+                                                                </p>
+                                                            </div>
+                                                            <div class="text-right order-time">
+                                                                <span>Heure</span>
+                                                                <p>
+                                                                    <t t-esc="order.confirmation_date.strftime('%H:%M')"/>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="dashbd-elt testtt">
+                                                        <div t-if="sale_order_picking.state == 'assigned'" class="cmd-card-footer">
+                                                            <button type="button" id="accept_assignment" class="btn btn-link accept-cmd">Accepter</button>
+                                                            <button type="button" id="reject_assignment" class="btn btn-link refuse-cmd">Refuser</button>
+                                                        </div>
+                                                        <div t-if="sale_order_picking.state == 'accepted' or sale_order_picking.state == 'collected'" class="accepted tttt">
+                                                            Livraison en cours <i class="fas fa-truck-container"/>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="shipping-details d-none">
+                                                        <input type="hidden" id="picking" name="picking" t-att-value="sale_order_picking.id"/>
+                                                        <div class="d-flex flex-md-row-reverse flex-column justify-content-center" id="shipping-details-body">
+                                                            <div t-if="not sale_order_picking.state == 'delivered' and not sale_order_picking.state == 'completed'" class="d-flex align-items-center col-md-5 px-0 assignation assignation" id="picking-assigned">
+                                                                <div t-if="sale_order_picking.state == 'accepted' or sale_order_picking.state == 'collected'" class="py-4 px-4">
+
+                                                                    <p class="d-block pb-4  d-md-none pick-title" t-if="sale_order_picking.state == 'accepted' or sale_order_picking.state == 'collected'">Félicitation <t t-esc="order.driver_id.name"/>
+, cette livraison est en cours</p>
+
+                                                                    <div class="d-block timeline">
+                                                                        <div class="col-12 d-flex step" id="accepted">
+                                                                            <span class="step-elt mr-2 d-flex justify-content-center align-items-center">
+                                                                                <i t-attf-class="fas fa-circle #{'active-circle' if sale_order_picking.state == 'accepted' else ''}"></i>
+                                                                            </span>
+                                                                            <span>Position de depart</span>
+                                                                        </div>
+
+                                                                        <div class="col">
+                                                                            <div id="collect-line" class="step-elt d-flex justify-content-center align-items-center">
+                                                                                <span t-attf-class="line #{'active-line' if sale_order_picking.state == 'collected' else ''}"></span>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col-12 d-flex step" id="collected">
+                                                                            <span id="deliv-line" class="step-elt mr-2 d-flex justify-content-center align-items-center">
+                                                                                <i t-attf-class="fas fa-circle #{'active-circle' if sale_order_picking.state == 'collected' else ''}"></i>
+                                                                            </span>
+                                                                            <span>Restaurant</span>
+                                                                        </div>
+
+                                                                        <div class="col">
+                                                                            <div class="step-elt d-flex justify-content-center align-items-center">
+                                                                                <span t-attf-class="line #{'active-line' if sale_order_picking.state == 'delivered' else ''}"></span>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col-12 d-flex step" id="delivered">
+                                                                            <span class="step-elt mr-2 d-flex justify-content-center align-items-center">
+                                                                                <i t-attf-class="fas fa-circle #{'active-circle' if sale_order_picking.state == 'delivered' else ''}"></i>
+                                                                            </span>
+                                                                            <span>
+                                                                                <t t-esc="order.partner_shipping_id.street"/>
+(client)
+                                                                            </span>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <div class="pt-4 delivery-message">
+                                                                        <div class="">
+                                                                            <i class="fas fa-truck"></i>
+                                                                        </div>
+                                                                        <div class="">
+                                                                            <i class="fas fa-caret-left"></i>
+                                                                            <div class="col step-message">
+                                                                                <span id="delivery_step">Votre course a commencé !</span>
+                                                                            </div>
+                                                                            <button type="button" class="btn btn-outline-success delivery-step-confirmation">Valider</button>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div t-if="not sale_order_picking.state == 'delivered' and not sale_order_picking.state == 'completed'" class="col-md-7 px-0 order-2 order-md-1 shipping-details-content">
+                                                                <div class="">
+                                                                    <p>DETAILS SUR LE CLIENT</p>
+                                                                    <div class="flex-md-column client-details">
+                                                                        <div class="">
+                                                                            <p>Nom du client :    <b>
+                                                                                <t t-esc="order.partner_id.name"/>
+                                                                            </b>
+                                                                        </p>
+                                                                        <p>Contact : <b class="client-mobile">
+                                                                            <t t-esc="order.partner_shipping_id.phone"/>
+                                                                        </b>
+                                                                    </p>
+                                                                    <p>Adresse du client :</p>
+                                                                    <p>
+                                                                        <i class="fas fa-map-marker-alt"></i>
+                                                                        <span>
+                                                                            <t t-esc="order.partner_shipping_id.street"/>
+                                                                        </span>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="call-client">
+                                                                    <i class="fas fa-phone-alt btn"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-10">
+                                                            <p>DETAILS SUR LE CLIENT</p>
+                                                            <table class="table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th></th>
+                                                                        <th>Produit</th>
+                                                                        <th>Quantité</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody class="">
+                                                                    <t t-set="num" t-value="0"/>
+                                                                    <t t-foreach="order.order_line" t-as="lines">
+                                                                        <t t-set="num" t-value="num + 1"/>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <t t-esc="num"/>
+                                                                            </td>
+                                                                            <td>
+                                                                                <span t-field="lines.name"/>
+                                                                            </td>
+                                                                            <td class="text-right">
+                                                                                <span t-field="lines.product_uom_qty"/>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </t>
+                                                                </tbody>
+                                                            </table>
+                                                            <div class="">
+                                                                <p>Total du payement</p>
+                                                                <p>
+                                                                    <t t-esc="order.amount_total"/>
+ FCFA</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div t-if="sale_order_picking.state == 'assigned'" class="assignation">
+                                                    <button type="button" id="accept_assignment" class="btn btn-outline-success">Accepter <i class="fas fa-check"></i>
+                                                    </button>
+                                                    <button type="button" id="reject_assignment" class="btn btn-outline-danger">Refuser <i class="fas fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </t>
+                                </t>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="pills-accepted" role="tabpanel" aria-labelledby="pills-workzone-tab">
+                        <div class="col mt-4 font-weight-bold dashbd-mdflx justify-content-between mb-2 d-none d-md-flex ol-color">
+                            <span class="font-weight-bold">Commandes Acceptées</span>
+                            <span>Tout voir <i class="fas fa-chevron-right"/>
+                            </span>
+                        </div>
+
+                        <div class="order-list">
+                            <div t-if="picking_orders" class="col flex-wrap d-md-flex d-block cmd-list">
+                                <t t-foreach="picking_orders" t-as="sale_order_picking">
+                                    <t t-foreach="sale_order_picking.sale_order" t-as="order">
+                                        <div t-if="sale_order_picking.state == 'accepted' or sale_order_picking.state == 'collected'" class="mb-3 bg-white p-3 mr-md-2 pb-md-0 div-each-cmd dashbd-elt">
+                                            <div class="dashbd-elt">
+                                                <div class="d-flex justify-content-between">
+                                                    <input type="hidden" id="part-lat" name="part_lat" t-att-value="order.partner_shipping_id.partner_latitude"/>
+                                                    <input type="hidden" id="part-long" name="part_long" t-att-value="order.partner_shipping_id.partner_longitude"/>
+                                                    <input type="hidden" id="order-name" name="order_name" t-att-value="order.name"/>
+                                                    <span class="client-name">
+                                                        <t t-esc="order.partner_id.name"/>
+                                                    </span>
+                                                    <button type="button" class="p-0 order-details btn btn-link">Détails</button>
+                                                </div>
+                                                <div class="py-2">
+                                                    <i class="fas fa-map-marker-alt"></i>
+                                                    <span class="client-adress">
+                                                        <t t-esc="order.partner_shipping_id.street"/>
+                                                    </span>
+                                                </div>
+                                                <div class="d-flex justify-content-between div-datetime">
+                                                    <div class="">
+                                                        <span>Date</span>
+                                                        <p>
+                                                            <t t-esc="order.confirmation_date.strftime('%d-%m-%Y')"/>
+                                                        </p>
+                                                    </div>
+                                                    <div class="text-right order-time">
+                                                        <span>Heure</span>
+                                                        <p>
+                                                            <t t-esc="order.confirmation_date.strftime('%H:%M')"/>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="dashbd-elt testtt">
+                                                <div t-if="sale_order_picking.state == 'assigned'" class="cmd-card-footer">
+                                                    <button type="button" id="accept_assignment" class="btn btn-link accept-cmd">Accepter</button>
+                                                    <button type="button" id="reject_assignment" class="btn btn-link refuse-cmd">Refuser</button>
+                                                </div>
+                                                <div t-if="sale_order_picking.state == 'accepted' or sale_order_picking.state == 'collected'" class="accepted tttt">
+                                                    Livraison en cours <i class="fas fa-truck-container"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="shipping-details d-none">
+                                                <input type="hidden" id="picking" name="picking" t-att-value="sale_order_picking.id"/>
+                                                <div class="d-flex flex-md-row-reverse flex-column justify-content-center">
+                                                    <div t-if="not sale_order_picking.state == 'delivered' and not sale_order_picking.state == 'completed'" class="d-flex align-items-center col-md-5 px-0 assignation assignation" id="picking-assigned">
+                                                        <div t-if="sale_order_picking.state == 'accepted' or sale_order_picking.state == 'collected'" class="py-4 px-4">
+
+                                                            <p class="d-block pb-4  d-md-none pick-title" t-if="sale_order_picking.state == 'accepted' or sale_order_picking.state == 'collected'">Félicitation <t t-esc="order.driver_id.name"/>
+    , cette livraison est en cours</p>
+
+                                                            <div class="d-block timeline">
+                                                                <div class="col-12 d-flex step" id="accepted">
+                                                                    <span class="step-elt mr-2 d-flex justify-content-center align-items-center">
+                                                                        <i t-attf-class="fas fa-circle #{'active-circle' if sale_order_picking.state == 'accepted' else ''}"></i>
+                                                                    </span>
+                                                                    <span>Position de depart</span>
+                                                                </div>
+
+                                                                <div class="col">
+                                                                    <div id="collect-line" class="step-elt d-flex justify-content-center align-items-center">
+                                                                        <span t-attf-class="line #{'active-line' if sale_order_picking.state == 'collected' else ''}"></span>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-12 d-flex step" id="collected">
+                                                                    <span id="deliv-line" class="step-elt mr-2 d-flex justify-content-center align-items-center">
+                                                                        <i t-attf-class="fas fa-circle #{'active-circle' if sale_order_picking.state == 'collected' else ''}"></i>
+                                                                    </span>
+                                                                    <span>Restaurant</span>
+                                                                </div>
+
+                                                                <div class="col">
+                                                                    <div class="step-elt d-flex justify-content-center align-items-center">
+                                                                        <span t-attf-class="line #{'active-line' if sale_order_picking.state == 'delivered' else ''}"></span>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-12 d-flex step" id="delivered">
+                                                                    <span class="step-elt mr-2 d-flex justify-content-center align-items-center">
+                                                                        <i t-attf-class="fas fa-circle #{'active-circle' if sale_order_picking.state == 'delivered' else ''}"></i>
+                                                                    </span>
+                                                                    <span>
+                                                                        <t t-esc="order.partner_shipping_id.street"/>
+    (client)
+                                                                    </span>
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div class="pt-4 delivery-message">
+                                                                <div class="">
+                                                                    <i class="fas fa-truck"></i>
+                                                                </div>
+                                                                <div class="">
+                                                                    <i class="fas fa-caret-left"></i>
+                                                                    <div class="col step-message">
+                                                                        <span id="delivery_step">Votre course a commencé !</span>
+                                                                    </div>
+                                                                    <button type="button" class="btn btn-outline-success delivery-step-confirmation">Valider</button>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div t-if="not sale_order_picking.state == 'delivered' and not sale_order_picking.state == 'completed'" class="col-md-7 px-0 order-2 order-md-1 shipping-details-content">
+                                                        <div class="">
+                                                            <p>DETAILS SUR LE CLIENT</p>
+                                                            <div class="flex-md-column client-details">
+                                                                <div class="">
+                                                                    <p>Nom du client :    <b>
+                                                                        <t t-esc="order.partner_id.name"/>
+                                                                    </b>
+                                                                </p>
+                                                                <p>Contact : <b class="client-mobile">
+                                                                    <t t-esc="order.partner_shipping_id.phone"/>
+                                                                </b>
+                                                            </p>
+                                                            <p>Adresse du client :</p>
+                                                            <p>
+                                                                <i class="fas fa-map-marker-alt"></i>
+                                                                <span>
+                                                                    <t t-esc="order.partner_shipping_id.street"/>
+                                                                </span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="call-client">
+                                                            <i class="fas fa-phone-alt btn"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-10">
+                                                    <p>DETAILS SUR LE CLIENT</p>
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th></th>
+                                                                <th>Produit</th>
+                                                                <th>Quantité</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="">
+                                                            <t t-set="num" t-value="0"/>
+                                                            <t t-foreach="order.order_line" t-as="lines">
+                                                                <t t-set="num" t-value="num + 1"/>
+                                                                <tr>
+                                                                    <td>
+                                                                        <t t-esc="num"/>
+                                                                    </td>
+                                                                    <td>
+                                                                        <span t-field="lines.name"/>
+                                                                    </td>
+                                                                    <td class="text-right">
+                                                                        <span t-field="lines.product_uom_qty"/>
+                                                                    </td>
+                                                                </tr>
+                                                            </t>
+                                                        </tbody>
+                                                    </table>
+                                                    <div class="">
+                                                        <p>Total du payement</p>
+                                                        <p>
+                                                            <t t-esc="order.amount_total"/>
+    FCFA</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div t-if="sale_order_picking.state == 'assigned'" class="assignation">
+                                            <button type="button" id="accept_assignment" class="btn btn-outline-success">Accepter <i class="fas fa-check"></i>
+                                            </button>
+                                            <button type="button" id="reject_assignment" class="btn btn-outline-danger">Refuser <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </t>
+                        </t>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tab-pane fade" id="pills-delivered" role="tabpanel" aria-labelledby="pills-workzone-tab">
+                <div class="col mt-4 font-weight-bold dashbd-mdflx justify-content-between mb-2 d-none d-md-flex ol-color">
+                    <span class="font-weight-bold">Commandes Livrées</span>
+                    <span>Tout voir <i class="fas fa-chevron-right"/>
+                    </span>
+                </div>
+
+                <div class="order-list">
+                    <div t-if="picking_orders" class="col flex-wrap d-md-flex d-block cmd-list">
+                        <t t-foreach="picking_orders" t-as="sale_order_picking">
+                            <t t-foreach="sale_order_picking.sale_order" t-as="order">
+                                <div t-if="sale_order_picking.state == 'delivered'" class="mb-3 bg-white p-3 mr-md-2 pb-md-0 div-each-cmd dashbd-elt">
+                                    <div class="dashbd-elt">
+                                        <div class="d-flex justify-content-between">
+                                            <input type="hidden" id="part-lat" name="part_lat" t-att-value="order.partner_shipping_id.partner_latitude"/>
+                                            <input type="hidden" id="part-long" name="part_long" t-att-value="order.partner_shipping_id.partner_longitude"/>
+                                            <input type="hidden" id="order-name" name="order_name" t-att-value="order.name"/>
+                                            <span class="client-name">
+                                                <t t-esc="order.partner_id.name"/>
+                                            </span>
+                                            <button type="button" class="p-0 order-details btn btn-link">Détails</button>
+                                        </div>
+                                        <div class="py-2">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <span class="client-adress">
+                                                <t t-esc="order.partner_shipping_id.street"/>
+                                            </span>
+                                        </div>
+                                        <div class="d-flex justify-content-between div-datetime">
+                                            <div class="">
+                                                <span>Date</span>
+                                                <p>
+                                                    <t t-esc="order.confirmation_date.strftime('%d-%m-%Y')"/>
+                                                </p>
+                                            </div>
+                                            <div class="text-right order-time">
+                                                <span>Heure</span>
+                                                <p>
+                                                    <t t-esc="order.confirmation_date.strftime('%H:%M')"/>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="shipping-details d-none">
+                                        <input type="hidden" id="picking" name="picking" t-att-value="sale_order_picking.id"/>
+                                        <div class="d-flex flex-md-row-reverse flex-column justify-content-center" id="shipping-details-body">
+                                            <div t-if="sale_order_picking.state == 'delivered' or sale_order_picking.state == 'completed'" class="delivery-done">
+                                                <div class="">
+                                                    <P class="done-msg">Vous avez livré la commande <t t-esc="order.name"/>
+.</P>
+                                                    <img class="" src="/open_livreur_theme/static/src/img/food-delivery.png"/>
+                                                </div>
+                                                <div class="">
+                                                    <P class="">Feedback du client</P>
+                                                    <img class="" t-attf-src="data:image/jpg;base64,{{ order.partner_id.image }}"/>
+                                                    <P class="">
+                                                        <t t-esc="order.partner_id.name"/>
+                                                    </P>
+                                                    <P t-if="sale_order_picking and len(sale_order_picking) &gt; 0 and 'rating' in sale_order_picking.fields_get()" class="">
+                                                        <i t-if="sale_order_picking.rating &lt; 0.5" class="fas fa-star star-empty"></i>
+                                                        <i t-if="sale_order_picking.rating &gt;= 0.5 and sale_order_picking.rating &lt; 1" class="fas fa-star-half-alt"></i>
+                                                        <i t-if="sale_order_picking.rating &gt;= 1" class="fas fa-star star-full"></i>
+
+                                                        <i t-if="sale_order_picking.rating &lt; 1.5" class="fas fa-star star-empty"></i>
+                                                        <i t-if="sale_order_picking.rating &gt;= 1.5 and sale_order_picking.rating &lt; 2" class="fas fa-star-half-alt"></i>
+                                                        <i t-if="sale_order_picking.rating &gt;= 2" class="fas fa-star star-full"></i>
+
+                                                        <i t-if="sale_order_picking.rating &lt; 2.5" class="fas fa-star star-empty"></i>
+                                                        <i t-if="sale_order_picking.rating &gt;= 2.5 and sale_order_picking.rating &lt; 3" class="fas fa-star-half-alt"></i>
+                                                        <i t-if="sale_order_picking.rating &gt;= 3" class="fas fa-star star-full"></i>
+
+                                                        <i t-if="sale_order_picking.rating &lt; 3.5" class="fas fa-star star-empty"></i>
+                                                        <i t-if="sale_order_picking.rating &gt;= 3.5 and sale_order_picking.rating &lt; 4" class="fas fa-star-half-alt"></i>
+                                                        <i t-if="sale_order_picking.rating &gt;= 4" class="fas fa-star star-full"></i>
+
+                                                        <i t-if="sale_order_picking.rating &lt; 4.5" class="fas fa-star star-empty"></i>
+                                                        <i t-if="sale_order_picking.rating &gt;= 4.5 and sale_order_picking.rating &lt; 5" class="fas fa-star-half-alt"></i>
+                                                        <i t-if="sale_order_picking.rating &gt;= 5" class="fas fa-star star-full"></i>
+                                                    </P>
+                                                </div>
+                                                <div>
+                                                    <p>Félicitations !</p>
+                                                    <P class="">Vous aviez terminé cette commande en 15mn et 26 seconde.</P>
+                                                </div>
+                                                <P class="">
+                                                    <a href="/page/job/list" class="btn btn-primary stretched-link">Retour à l'accueil</a>
+                                                </P>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </t>
+                        </t>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-workzone" role="tabpanel" aria-labelledby="pills-workzone-tab">...</div>
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="nav-rapports" role="tabpanel" aria-labelledby="nav-rapports-tab">B</div>
+    <div class="tab-pane fade" id="nav-calendrier" role="tabpanel" aria-labelledby="nav-calendrier-tab"></div>
+    <div class="tab-pane fade" id="nav-defis" role="tabpanel" aria-labelledby="nav-defis-tab">D</div>
+    <div class="tab-pane fade" id="nav-compte" role="tabpanel" aria-labelledby="nav-compte-tab">E</div>
+</div>
+
+<div class="col p-3 px-md-0 bg-white col-md-3 d-none d-md-flex user-info">
+    <div class="col-md-3">
+        <div class="pt-5 row">
+            <div class="col">
+                <p class="ol-color">Bonjour</p>
+                <h4>
+                    <span t-esc="driver_firstname[:9] + '...' if driver_firstname and len(driver_firstname) &gt; 10 else driver_firstname"/>
+                </h4>
+                <p>Modifier mon profil</p>
+            </div>
+            <div class="col-4">
+                <img class="img-thumbnail rounded-circle" t-att-src="'/web/image?model=res.partner&amp;field=image_medium&amp;id=%s' % (user_id.partner_id.id)"/>
+            </div>
+        </div>
+        <div class="py-2 px-3 d-flex align-items-center justify-content-between new-medal">
+            <div class="">
+                <p class="m-0">Felicitations !</p>
+                <h3>Nouveau badge</h3>
+                <p>Modifier mon profil</p>
+            </div>
+            <div class="col-5 p-0 medal-img">
+                <img class="img-fluid rounded-circle" src="/open_livreur_theme/static/src/img/004-medal.png"/>
+            </div>
+        </div>
+        <div class="pt-4">
+            <div class="d-flex justify-content-between">
+                <p class="m-0">Notifications</p>
+                <p class="m-0">Tout voir <i class="fas fa-chevron-right"/>
+                </p>
+            </div>
+            <div class="notifs-list">
+                <div class="py-2 d-flex each-notif notif">
+                    <div class="mr-2 d-flex p-0 justify-content-center align-items-center notif-icon">
+                        <i class="fas fa-exclamation"/>
+                    </div>
+                    <div class="notif-details">
+                        <p class="m-0">Vous avez une nouvelle commande</p>
+                        <p class="m-0">Lorem ipsum dolor sit amet, consetetur</p>
+                    </div>
+                </div>
+                <div class="py-2 d-flex each-notif msg">
+                    <div class="mr-2 d-flex p-0 justify-content-center align-items-center notif-icon">
+                        <i class="fas fa-envelope"/>
+                    </div>
+                    <div class="notif-details">
+                        <p class="m-0">Vous avez une nouveau message</p>
+                        <p class="m-0">Lorem ipsum dolor sit amet, consetetur</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-md-none driver-footer">
+    <div class="">
+                                Mes revenus journaliers : 
+    </div>
+    <div class="">
+                                Ma caisse : 
+    </div>
+</div>
+</div>
+</t>
+</template>
+
+</odoo>
+
+
+
+                            
